@@ -3,7 +3,6 @@ OOP_ASSIGNMENT_1, Class: Building
 ID_1: 207817529,ID_2: 206320954
 In this class we create a building using Json format
 we load from Json files and create the object building
-
 """
 import json
 

@@ -2,7 +2,6 @@
 OOP_ASSIGNMENT_1, Class: Elevator
 ID_1: 207817529,ID_2: 206320954
 In this class we create an elevator using the information we receive from the Json file of the building
-
 """
 
 class Elevator:
