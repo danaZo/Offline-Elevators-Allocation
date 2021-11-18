@@ -41,7 +41,7 @@ Output = 'output.csv'
 building = read_json(Building)
 calls = read_csv(Calls)
 
-elev_list = [] # this will be list of lists that holds the calls
+elev_list = []  # this will be list of lists that holds the calls
 
 
 def add_call_to_list(k: int, elev_id: int):
@@ -49,13 +49,15 @@ def add_call_to_list(k: int, elev_id: int):
     elev_list[elev_id].append(calls[k][3])  # dest floor
 
 
-
-
 def allocate(calls) -> None:
     """
-    :return:  in this function we will find the most suitable elevator for a given call.
+    function allocate:
+    in this function we will find the most suitable elevator for a given call.
     first o f all, we create for every elevator a list that will hold it's floors that it needs to go to.
     we run on the indexes of the calls - every index represents a call's number.
+    @:param temp_total_time: temporary parameter, holds the time we calculate for every elevator,
+    plus the time it will take for it to do the specific call we check.
+    @:param fastest_elev: will be the elevator which it's time to make the current call will be the smallest.
     we run on the indexes of every elevator in the building, and sending it's values to a helper function
     that is calculating the total time it takes for the elevator to make all of it's calls,
     and the time it will take for it to make the current call with all of it's previous calls.
@@ -66,13 +68,10 @@ def allocate(calls) -> None:
     elevator's floors list.
     after we finish doing this to all the calls, we create a new csv file with allocated elevators for
     every call.
-    @:param temp_total_time: temporary parameter, holds the time we calculate for every elevator,
-    plus the time it will take for it to do the specific call we check.
-    @:param fastest_elev: will be the elevator which it's time to make the current call will be the smallest.
     """
     for i in range(len(building['_elevators'])):
-        currList = []
-        elev_list.append(currList)
+        curr_list = []
+        elev_list.append(curr_list)
     for k in range(len(calls)):
         temp_total_time = 1000000000.0
         fastest_elev = -1
@@ -86,16 +85,16 @@ def allocate(calls) -> None:
     create_csv(Output, calls)
 
 
-
 def elev_total_time(k: int, this_elev_id: int) -> float:
     """
-    :param k: is the call number
-    :param this_elev_id: the id number of the elevator
-    :return: in this function we calculate the total time that it takes to an elevator to move through all of the floors
+    function elev_total_time:
+    in this function we calculate the total time that it takes to an elevator to move through all of the floors
     it was allocated to, and the time it will take for it to complete a call that the function receives
     (the call we want to allocate an elevator to)
+    :param k:is the call number
+    :param this_elev_id: is the id number of the elevator
+    :return:
     """
-
     speed_el = building['_elevators'][this_elev_id]['_speed']
     close_el = building['_elevators'][this_elev_id]['_closeTime']
     open_el = building['_elevators'][this_elev_id]['_openTime']
@@ -109,8 +108,8 @@ def elev_total_time(k: int, this_elev_id: int) -> float:
 
     for index in range(len(elev_list[this_elev_id])):
         open_n_close = (open_el + close_el) * len(elev_list[this_elev_id])
-        amountOfFloors = (len(elev_list[this_elev_id])-1)
-        start_n_close = (start_el * amountOfFloors) + (stop_el * amountOfFloors)
+        amount_of_floors = (len(elev_list[this_elev_id])-1)
+        start_n_close = (start_el * amount_of_floors) + (stop_el * amount_of_floors)
 
         if index != 0:
             all_floors_speed = speed_el * abs(int(elev_list[this_elev_id][index]) - int(elev_list[this_elev_id][index-1]))
@@ -121,6 +120,6 @@ def elev_total_time(k: int, this_elev_id: int) -> float:
     return total_time_with_new_call
 
 
-if __name__ == '_main_':
-   Calls_a = read_csv(Calls)
-   allocate(Calls_a)
+if __name__ == '__main__':
+    Calls_a = read_csv(Calls)
+    allocate(Calls_a)
