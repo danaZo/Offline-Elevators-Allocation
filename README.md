@@ -1,6 +1,6 @@
 # __Readme__
 #### Object oriented programming assignment 1.
-#### Wrriten by Dikla Birman - 206329054 and Dana Zorohov - 207817529.
+#### Wrriten by Dikla Birman and Dana Zorohov.
 #### In this assigment we built an offline algorithm which allocates the most suitable elevator for a given call.
 
 ## literature review :
